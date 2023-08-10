@@ -1,0 +1,154 @@
+1) def reverse_and_concatenate(s, i):
+    reversed_s = s[::-1]
+    concatenated_result = reversed_s * i
+    return concatenated_result
+    
+input_string = "IloveSefactory"
+repeated_times = 10
+result = reverse_and_concatenate(input_string, repeated_times)
+print(result)  
+
+2) def rearrange_upper_lower(s):
+    upper_case_letters = ""
+    lower_case_letters = ""
+
+    for char in s:
+        if char.isupper():
+            upper_case_letters += char
+        else:
+            lower_case_letters += char
+
+    rearranged_string = upper_case_letters + lower_case_letters
+    return rearranged_string
+
+input_string = "HelloWorld"
+result = rearrange_upper_lower(input_string)
+print(result)
+
+3) def is_reordering(s1, s2):
+    return sorted(s1) == sorted(s2)
+
+string1 = "abcde"
+string2 = "edabc"
+result = is_reordering(string1, string2)
+print(result) 
+
+4) def find_max_with_index(l):
+    if not l:
+        return None, None
+
+    max_value = l[0]
+    max_index = 0
+
+    for i in range(1, len(l)):
+        if l[i] > max_value:
+            max_value = l[i]
+            max_index = i
+
+    return max_value, max_index
+
+numbers = [5,6,3,2,7,2,0,1,6]
+max_num, max_index = find_max_with_index(numbers)
+print("Max value:", max_num)
+print("Index of max value:", max_index)
+
+5) def count_digits_recursive(n):
+    if n == 1:
+        return 1
+    else:
+        return 1 + count_digits_recursive(n // 10)
+
+number = 123
+digit_count = count_digits_recursive(number)
+print("Number of digits:", digit_count)
+
+List Jumps
+
+def list_jumps(jumps):
+    n = len(jumps)
+    visited = set()
+
+    index = 0
+    while index >= 0 and index < n and index not in visited:
+        visited.add(index)
+        index += jumps[index]
+
+    if index < 0 or index >= n:
+        return "out-of-bounds"
+    else:
+        return "cycle"
+
+
+jumps = [2, -1, 1, -2]
+result = list_jumps(jumps)
+print(result)
+
+POS System
+
+class Item:
+    def __init__(self, barcode, name, price):
+        self.barcode = barcode
+        self.name = name
+        self.price = price
+
+class POSSystem:
+    def __init__(self):
+        self.items = {}
+        self.current_receipt = []
+
+    def add_item(self, barcode, quantity):
+        if barcode in self.items:
+            item = self.items[barcode]
+            total_price = item.price * quantity
+            self.current_receipt.append((item.name, quantity, total_price))
+        else:
+            print("Item not found!")
+
+    def start_receipt(self):
+        self.current_receipt = []
+
+    def print_receipt(self):
+        total_amount = 0
+        for item_name, quantity, total_price in self.current_receipt:
+            print(f"{item_name} - Quantity: {quantity} - Total Price: {total_price}")
+            total_amount += total_price
+        print(f"Total: {total_amount}\n")
+
+    def run(self):
+        while True:
+            start_new_receipt = input("Start a new receipt? (yes/no): ").lower()
+            if start_new_receipt == "no":
+                break
+            elif start_new_receipt == "yes":
+                self.start_receipt()
+
+                while True:
+                    barcode = input("Enter item barcode: ")
+                    if barcode == "exit":
+                        break
+
+                    quantity = int(input("Enter quantity: "))
+                    self.add_item(barcode, quantity)
+
+                    add_another_item = input("Add another item? (yes/no): ").lower()
+                    if add_another_item == "no":
+                        break
+
+                self.print_receipt()
+
+if __name__ == "__main__":
+    pos_system = POSSystem()
+    
+    # Add items to the system
+    pos_system.items = {
+        "123": Item("123", "Item 1", 10),
+        "456": Item("456", "Item 2", 20),
+        "789": Item("789", "Item 3", 15),
+    }
+
+    pos_system.run()
+
+
+
+
+
